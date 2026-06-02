@@ -82,11 +82,28 @@ export function CyberpunkPortfolio() {
   const smoothPreviewX = useSpring(previewX, { stiffness: 240, damping: 28 });
   const smoothPreviewY = useSpring(previewY, { stiffness: 240, damping: 28 });
 
-  function updateProjectPreview(event: PointerEvent<HTMLElement>) {
+  function getProjectPreviewPosition(event: PointerEvent<HTMLElement>) {
     const previewWidth = Math.min(390, window.innerWidth * 0.62);
     const previewHeight = previewWidth / 1.42;
-    previewX.set(Math.min(event.clientX + 24, window.innerWidth - previewWidth - 14));
-    previewY.set(Math.max(14, Math.min(event.clientY - previewHeight / 2, window.innerHeight - previewHeight - 14)));
+    return {
+      x: Math.min(event.clientX + 24, window.innerWidth - previewWidth - 14),
+      y: Math.max(14, Math.min(event.clientY - previewHeight / 2, window.innerHeight - previewHeight - 14)),
+    };
+  }
+
+  function showProjectPreview(project: (typeof projects)[number], event: PointerEvent<HTMLElement>) {
+    const position = getProjectPreviewPosition(event);
+    previewX.jump(position.x);
+    previewY.jump(position.y);
+    smoothPreviewX.jump(position.x);
+    smoothPreviewY.jump(position.y);
+    setActiveProject(project);
+  }
+
+  function updateProjectPreview(event: PointerEvent<HTMLElement>) {
+    const position = getProjectPreviewPosition(event);
+    previewX.set(position.x);
+    previewY.set(position.y);
   }
 
   return (
@@ -177,13 +194,10 @@ export function CyberpunkPortfolio() {
         <div className="cp-project-list" onMouseLeave={() => setActiveProject(null)}>
           {projects.map((project) => (
             <a
-              className={`cp-project cp-project-${project.color} ${activeProject?.id === project.id ? "cp-preview-active" : ""}`}
+              className={`cp-project cp-project-${project.color}`}
               href="#contact"
               key={project.id}
-              onPointerEnter={(event) => {
-                setActiveProject(project);
-                updateProjectPreview(event);
-              }}
+              onPointerEnter={(event) => showProjectPreview(project, event)}
               onPointerMove={updateProjectPreview}
             >
               <div className="cp-project-id">
@@ -204,13 +218,6 @@ export function CyberpunkPortfolio() {
                 className="cp-project-mobile-image"
                 style={{ backgroundImage: `url(${project.image})` }}
               />
-              <div className="cp-project-hover-fallback">
-                <div
-                  className="cp-project-preview-image"
-                  style={{ backgroundImage: `url(${project.image})` }}
-                />
-                <span className="cp-image-grid" />
-              </div>
             </a>
           ))}
 

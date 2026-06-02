@@ -271,7 +271,6 @@
   .cp-project-meta svg { width: 18px; color: var(--cp-yellow); transition: transform .3s ease; }
   .cp-project:hover .cp-project-meta svg { transform: translate(5px,-5px); }
   .cp-project-mobile-image { display: none; }
-  .cp-project-hover-fallback { display: none; }
   .cp-project-preview { position: fixed; z-index: 30; top: 0; left: 0; width: min(390px,62vw); aspect-ratio: 1.42; overflow: hidden; border: 2px solid var(--cp-yellow); pointer-events: none; transform-origin: center; clip-path: polygon(8% 0,100% 0,100% 88%,92% 100%,0 100%,0 12%); box-shadow: 0 20px 60px rgba(0,0,0,.45); }
   .cp-project-preview-image { position: absolute; inset: 0; background-position: center; background-size: cover; filter: grayscale(1) contrast(1.32); }
   .cp-project-preview::after { content: ""; position: absolute; inset: 0; opacity: .28; mix-blend-mode: color; }
@@ -344,10 +343,6 @@
 
   @media (hover: hover) and (pointer: fine) and (max-width: 860px) {
     .cp-project-mobile-image { display: none; }
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .cp-project:hover:not(.cp-preview-active) .cp-project-hover-fallback { position: absolute; z-index: 20; top: 50%; right: 9%; display: block; width: min(350px,48vw); aspect-ratio: 1.42; overflow: hidden; border: 2px solid var(--cp-yellow); pointer-events: none; transform: translateY(-50%) rotate(-2deg); clip-path: polygon(8% 0,100% 0,100% 88%,92% 100%,0 100%,0 12%); box-shadow: 0 20px 60px rgba(0,0,0,.45); }
   }
 
   @media (hover: none), (pointer: coarse) {
