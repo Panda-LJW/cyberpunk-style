@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-06-03
+
+### Changed
+
+- Reworked the selected-work project titles into a Wibify-inspired vertical letter roll on hover.
+- Kept each project row layout stable while only the title letters move through an overflow-hidden mask.
+- Moved the hover accent color into the lower cloned title layer so yellow enters with the rolling text instead of tinting the row immediately.
+- Tuned the motion to a precise 0.62s `cubic-bezier(0.76, 0, 0.24, 1)` transition with light per-letter staggering.
+
 ## 2026-06-02
 
 ### Fixed

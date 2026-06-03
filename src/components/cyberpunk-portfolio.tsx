@@ -14,7 +14,7 @@ import {
   RadioIcon,
   ScanLineIcon,
 } from "lucide-react";
-import { useState, type PointerEvent } from "react";
+import { useState, type CSSProperties, type PointerEvent } from "react";
 
 const projects = [
   {
@@ -63,6 +63,37 @@ const skills = [
   "PROTOTYPING",
   "VISUAL IDENTITY",
 ];
+
+function ProjectTitleRoll({ title }: { title: string }) {
+  const letters = Array.from(title);
+
+  return (
+    <h3 aria-label={title} className="cp-project-title-roll">
+      <span aria-hidden="true" className="cp-title-roll-row">
+        {letters.map((letter, index) => (
+          <span
+            className="cp-title-roll-letter"
+            key={`primary-${letter}-${index}`}
+            style={{ "--letter-index": index } as CSSProperties}
+          >
+            {letter === " " ? "\u00a0" : letter}
+          </span>
+        ))}
+      </span>
+      <span aria-hidden="true" className="cp-title-roll-row cp-title-roll-clone">
+        {letters.map((letter, index) => (
+          <span
+            className="cp-title-roll-letter"
+            key={`clone-${letter}-${index}`}
+            style={{ "--letter-index": index } as CSSProperties}
+          >
+            {letter === " " ? "\u00a0" : letter}
+          </span>
+        ))}
+      </span>
+    </h3>
+  );
+}
 
 function CornerMarks() {
   return (
@@ -204,10 +235,7 @@ export function CyberpunkPortfolio() {
                 <span>{project.id}</span>
               </div>
               <div className="cp-project-title-window">
-                <div className="cp-project-title-track">
-                  <h3>{project.title}</h3>
-                  <h3 aria-hidden="true">{project.title}</h3>
-                </div>
+                <ProjectTitleRoll title={project.title} />
               </div>
               <div className="cp-project-meta">
                 <span>{project.type}</span>
